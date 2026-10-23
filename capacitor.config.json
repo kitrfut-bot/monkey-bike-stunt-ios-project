@@ -1,0 +1,12 @@
+{
+  "appId": "com.yourname.monkeybikestunt",
+  "appName": "Monkey Bike Stunt",
+  "webDir": "www",
+  "backgroundColor": "#0E1535",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#0E1535",
+    "allowsLinkPreview": false,
+    "limitsNavigationsToAppBoundDomains": false
+  }
+}

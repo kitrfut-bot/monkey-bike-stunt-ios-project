@@ -1,0 +1,14 @@
+{
+  "name": "monkey-bike-stunt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monkey Bike Stunt - iOS wrapper (Capacitor + WKWebView)",
+  "dependencies": {
+    "@capacitor/core": "latest",
+    "@capacitor/ios": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "latest",
+    "@capacitor/assets": "latest"
+  }
+}

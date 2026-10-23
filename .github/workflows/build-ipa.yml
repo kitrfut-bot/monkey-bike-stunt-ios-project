@@ -1,0 +1,25 @@
+# Builds an UNSIGNED .ipa on GitHub's free macOS runner (no Mac needed).
+# Sign/install it afterwards with Sideloadly or AltStore (free Apple ID), or re-sign with your own certificate.
+name: Build unsigned IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: bash setup.sh --ci
+      - name: Archive (no code signing)
+        run: |
+          if [ -d ios/App/App.xcworkspace ]; then TARGET="-workspace ios/App/App.xcworkspace"; else TARGET="-project ios/App/App.xcodeproj"; fi
+          xcodebuild $TARGET -scheme App -configuration Release -sdk iphoneos \
+            -archivePath build/App.xcarchive \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" archive
+          mkdir -p Payload && cp -R build/App.xcarchive/Products/Applications/App.app Payload/
+          zip -qr MonkeyBikeStunt.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with: { name: MonkeyBikeStunt-unsigned-ipa, path: MonkeyBikeStunt.ipa }
